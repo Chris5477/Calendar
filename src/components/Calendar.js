@@ -1,9 +1,12 @@
 import { useState } from "react";
+import CalendarDays from "./CalendarDays";
+import Day from "./Day";
+import SectionCalendar from "./SectionCalendar";
 
 const Calendar = () => {
 	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-	const numbDate = new Date().getDate();
+	const [numbDate, setNumbDate] = useState(new Date().getDate());
 	const [month, setMonth] = useState(months[new Date().getMonth()]);
 	const [year, setYear] = useState(new Date().getFullYear());
 	const actualDate = numbDate;
@@ -44,6 +47,11 @@ const Calendar = () => {
 		setYear(Number(response));
 	};
 
+	const getDate = (e) => {
+		setNumbDate(e.target.innerText);
+	};
+	console.log(`${numbDate}/${month}/${year}`);
+
 	return (
 		<div className="calendar">
 			<div className="calendar-header">
@@ -58,35 +66,11 @@ const Calendar = () => {
 				</div>
 				<span className="changeMonth"> &#x3009;</span>
 				{visibilityConainer && (
-					<div className="select-date">
-						{months.map((month, index) => (
-							<span key={`index ${index}`} onClick={(e) => selectMonth(e)} className="select-month">
-								{month}
-							</span>
-						))}
-					</div>
+					<SectionCalendar array={months} method={selectMonth} classWrapper={"select-date"} classElement={"select-month"} />
 				)}
 			</div>
-			<div className="calendar-all-days">
-				{days.map((day, index) => (
-					<span key={`index ${index}`} className="day-of-week">
-						{day}
-					</span>
-				))}
-			</div>
-			<div className="calendar-days-of-month">
-				{Array.from({ length: allMonths[month] + firstDay }).map((_, index) =>
-					index >= firstDay ? (
-						<span key={`index ${index}`} className={index == actualDate ? "active-day" : "day-of-month"}>
-							{index - firstDay + 1}
-						</span>
-					) : (
-						<span key={`index ${index}`} className="day-of-month">
-							{""}
-						</span>
-					)
-				)}
-			</div>
+			<SectionCalendar array={days} classWrapper={"calendar-all-days"} classElement={"day-of-week"} />
+			<CalendarDays arrayMonth={allMonths[month]} dayOne={firstDay} method={getDate} actualDate={actualDate} />
 		</div>
 	);
 };
