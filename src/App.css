@@ -40,6 +40,7 @@ body {
 	justify-content: space-around;
 	align-items: center;
 	flex-direction: column;
+	position: relative;
 }
 
 .actualMonth {
@@ -87,10 +88,39 @@ body {
 	border-radius: 7px;
 }
 
-.day-of-week:hover,
 .day-of-month:hover,
 .active-day:hover {
 	background-color: #399270;
 	color: black;
+	transition: 0.4s;
+}
+
+.select-date {
+	width: 20%;
+	height: auto;
+	position: absolute;
+	background-color: #2d7157;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.select-month {
+	width: 48%;
+	height: 50px;
+	background-color: #2d7157;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+}
+
+.select-month:hover {
+	background-color: #399270;
 	transition: 0.4s;
 }
