@@ -1,9 +1,35 @@
 const Calendar = () => {
-	const months = ["Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"];
-	const days = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
+	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 	const date = new Date();
 	const month = months[date.getMonth()];
 	const formatDate = String(date).split(" ").splice(0, 4).join(" ");
+	const yearOnly = formatDate.split(" ")[3];
+
+	const allMonths = {
+		January: 31,
+		February: yearOnly % 4 == 0 ? 29 : 28,
+		March: 31,
+		Apris: 30,
+		May: 31,
+		June: 30,
+		July: 31,
+		August: 31,
+		September: 30,
+		October: 31,
+		November: 30,
+		December: 31,
+	};
+
+	const correctPositionDay = () => {
+		const [day, month, , year] = formatDate.split(" ");
+		const firstOfMonth = `${day} ${month} 01 ${year}`;
+		const getDay = firstOfMonth.split(" ")[0];
+		const findIndex = days.indexOf(getDay);
+		return findIndex;
+	};
+
+	const wxc = correctPositionDay() + 4;
 
 	return (
 		<div className="calendar">
@@ -23,12 +49,17 @@ const Calendar = () => {
 				))}
 			</div>
 			<div className="calendar-days-of-month">
-				{/* A modifier , Creer pour le css */}
-				{Array.from({ length: 31 }).map((_, index) => (
-					<span key={`index ${index}`} className="day-of-month">
-						{index + 1}
-					</span>
-				))}
+				{Array.from({ length: allMonths[month] + wxc }).map((_, index) =>
+					index >= wxc ? (
+						<span key={`index ${index}`} className="day-of-month">
+							{index - wxc + 1}
+						</span>
+					) : (
+						<span key={`index ${index}`} className="day-of-month">
+							{""}
+						</span>
+					)
+				)}
 			</div>
 		</div>
 	);
