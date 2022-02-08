@@ -18,7 +18,8 @@ body {
 
 .calendar {
 	width: 400px;
-	height: 400px;
+	height: auto;
+	max-height: 450px;
 	background-color: #232127;
 	color: white;
 }
@@ -64,12 +65,14 @@ body {
 }
 
 .day-of-week,
-.day-of-month {
+.day-of-month,
+.active-day {
 	width: calc(100% / 7);
 	height: 50px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	font-size: 20px;
 }
 
 .calendar-days-of-month {
@@ -77,4 +80,17 @@ body {
 	height: auto;
 	display: flex;
 	flex-wrap: wrap;
+}
+
+.active-day {
+	background-color: rgb(165, 52, 52);
+	border-radius: 7px;
+}
+
+.day-of-week:hover,
+.day-of-month:hover,
+.active-day:hover {
+	background-color: #399270;
+	color: black;
+	transition: 0.4s;
 }

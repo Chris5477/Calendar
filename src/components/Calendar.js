@@ -1,10 +1,11 @@
 const Calendar = () => {
 	const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 	const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-	const date = new Date();
+	const date = new Date(1944, 4, 19);
 	const month = months[date.getMonth()];
 	const formatDate = String(date).split(" ").splice(0, 4).join(" ");
 	const yearOnly = formatDate.split(" ")[3];
+	const actualDate = formatDate.split(" ")[2];
 
 	const allMonths = {
 		January: 31,
@@ -22,14 +23,15 @@ const Calendar = () => {
 	};
 
 	const correctPositionDay = () => {
-		const [day, month, , year] = formatDate.split(" ");
-		const firstOfMonth = `${day} ${month} 01 ${year}`;
-		const getDay = firstOfMonth.split(" ")[0];
+		const month = date.getMonth();
+		const year = date.getFullYear();
+		const firstOfMonth = new Date(year, month, 1);
+		const getDay = String(firstOfMonth).split(" ")[0];
 		const findIndex = days.indexOf(getDay);
 		return findIndex;
 	};
 
-	const wxc = correctPositionDay() + 4;
+	const wxc = correctPositionDay();
 
 	return (
 		<div className="calendar">
@@ -51,7 +53,7 @@ const Calendar = () => {
 			<div className="calendar-days-of-month">
 				{Array.from({ length: allMonths[month] + wxc }).map((_, index) =>
 					index >= wxc ? (
-						<span key={`index ${index}`} className="day-of-month">
+						<span key={`index ${index}`} className={index == actualDate ? "active-day" : "day-of-month"}>
 							{index - wxc + 1}
 						</span>
 					) : (
